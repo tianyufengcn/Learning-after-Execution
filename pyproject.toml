@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "image2tikz-workflow-grpo"
+version = "0.3.0"
+description = "Distributed two-stage on-policy Workflow-GRPO for Image-to-TikZ with work stealing and render feedback"
+requires-python = ">=3.10"
+dependencies = [
+  "torch>=2.5",
+  "transformers>=5.0",
+  "accelerate>=1.0",
+  "peft>=0.15",
+  "deepspeed>=0.16",
+  "datasets>=3.0",
+  "PyYAML>=6.0",
+  "Pillow>=10.0",
+  "numpy>=1.26",
+  "pot>=0.9.5",
+  "safetensors>=0.4",
+]
+
+[project.optional-dependencies]
+accel = ["deepspeed>=0.16"]
+
+[project.scripts]
+i2t-workflow-grpo = "i2t_workflow_grpo.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

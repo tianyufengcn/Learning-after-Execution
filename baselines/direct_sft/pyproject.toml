@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "i2t-direct-sft"
+version = "0.2.0"
+description = "High-throughput Qwen3-VL-8B LoRA SFT for direct Image-to-TikZ"
+requires-python = ">=3.10"
+dependencies = [
+  "torch>=2.5",
+  "transformers>=5.0",
+  "accelerate>=1.0",
+  "peft>=0.15",
+  "PyYAML>=6.0",
+  "Pillow>=10.0",
+  "pyarrow>=15.0",
+  "datasets>=3.0",
+]
+
+[project.optional-dependencies]
+accel = ["deepspeed>=0.16"]
+
+[project.scripts]
+i2t-direct-train = "i2t_direct_sft.train:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
