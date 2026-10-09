@@ -223,3 +223,16 @@ The main algorithm is intentionally easy to locate:
 - `src/renderer.py` and `src/rewards/rsim.py`: execution and reward.
 
 Function names, classes, and the training logic are retained from the submitted code. Only repository paths and launch wrappers are adapted to the simplified public layout.
+
+## Citation
+
+The arXiv identifier will be added after the paper is publicly released. The citation block below is intentionally left as a placeholder so that only the arXiv ID needs to be updated later.
+
+```bibtex
+@article{tian2027learning,
+  title   = {Learning after Execution with Action-Specific Credit},
+  author  = {Tian, Yufeng and others},
+  journal = {arXiv preprint arXiv:<ARXIV_ID>},
+  year    = {2026}
+}
+```
