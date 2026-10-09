@@ -1,6 +1,10 @@
 # Learning after Execution with Action-Specific Credit
 
-Official code for **Learning after Execution with Action-Specific Credit** (ICLR 2027 submission).
+Official code for **Learning after Execution with Action-Specific Credit**.
+
+<p align="left">
+  <img src="https://img.shields.io/badge/arXiv-coming%20soon-b31b1b.svg" alt="arXiv">
+</p>
 
 Execution is usually treated as terminal feedback: a generated program is executed, scored, and the interaction ends. We instead use the execution result as an **intermediate state** for an additional action by the same shared policy. The policy first generates and executes an initial program, then revises a valid render or repairs a failed execution.
 
@@ -10,9 +14,9 @@ Execution is usually treated as terminal feedback: a generated program is execut
 
 The two actions receive action-specific credit:
 
-\[
-G_0 = S_1, \qquad G_1 = S_1 - S_0.
-\]
+$$
+G_0 = S_1, \qquad G_1 = S_1 - S_0
+$$
 
 The initial action is credited by the final trajectory outcome, while the corrective action is credited by improvement over the executed state it inherits. In the paper setting, both returns are scaled by \(\lambda=10\) and mean-centered independently within each target-image group.
 
