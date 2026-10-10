@@ -25,7 +25,7 @@ The initial action is credited by the final trajectory outcome, while the correc
 Results on **Final-945**. Visual metrics use the fixed-zero convention, where failed executions receive zero.
 
 | Method | Output | Render Success ↑ | RSim ↑ | DINO ↑ | DreamSim ↑ | CLIPImg ↑ |
-|---|---|---:|---:|---:|---:|---:|
+|---|---|---|---|---|---|---|
 | Base model | Direct | 71.64% | 0.4033 | 0.6025 | 0.5545 | 0.6435 |
 | Direct-SFT | Direct | 64.66% | 0.3554 | 0.5427 | 0.4960 | 0.5781 |
 | Direct-GRPO | Direct | 81.90% | 0.4709 | 0.7046 | 0.6468 | 0.7410 |
