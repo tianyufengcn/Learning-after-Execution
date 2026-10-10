@@ -9,7 +9,7 @@ Official code for **Learning after Execution with Action-Specific Credit**.
 Execution is usually treated as terminal feedback: a generated program is executed, scored, and the interaction ends. We instead use the execution result as an **intermediate state** for an additional action by the same shared policy. The policy first generates and executes an initial program, then revises a valid render or repairs a failed execution.
 
 <p align="center">
-  <img src="assets/overview.png" width="96%" alt="Learning after Execution overview">
+  <img src="assets/overview.svg" width="96%" alt="Learning after Execution overview">
 </p>
 
 The two actions receive action-specific credit:
@@ -41,7 +41,7 @@ The Stage 0 result uses the same single-call inference setting as the direct bas
 The corrective behavior is learned during training rather than automatically inherited from a strong direct generator. On Dev-150, the fraction of paired-success examples improved by Stage 1 rises from 12.2% at initialization to 42.5% at step 75 and 46.8% at step 125.
 
 <p align="center">
-  <img src="assets/learning_dynamics.png" width="96%" alt="Learning dynamics">
+  <img src="assets/learning_dynamics.svg" width="96%" alt="Learning dynamics">
 </p>
 
 ## Repository Layout
