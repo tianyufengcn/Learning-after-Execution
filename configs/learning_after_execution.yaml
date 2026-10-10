@@ -1,0 +1,109 @@
+# Learning after Execution (two-stage on-policy) training configuration.
+#
+# Paper-active setting: 4 ranks x 2 root target groups, G=8 independent
+# two-stage trajectories per target, loss microbatch 2.
+
+seed: 20260823
+
+model:
+  base_model_path: ${BASE_MODEL}
+  adapter_path: ${INIT_ADAPTER}
+  processor_path: ${BASE_MODEL}
+  dtype: bfloat16
+  attn_implementation: flash_attention_2
+  trust_remote_code: true
+  image_size: 448
+  min_pixels: 200704
+  max_pixels: 200704
+  gradient_checkpointing: true
+  disable_dropout: true
+
+data:
+  dataset_path: ${RL_DATASET}
+  max_samples: 1000
+  drop_last: true
+  num_workers: 0
+
+generation:
+  backend: transformers
+  temperature: 1.0
+  top_p: 0.9
+  repetition_penalty: 1.0
+  stage0_max_completion_length: 8192
+  stage1_max_completion_length: 8192
+  stage0_generation_microbatch: 6
+  stage1_generation_microbatch: 3
+  stop_on_end_document: true
+
+workflow:
+  num_generations: 8
+  reward_scale: 10.0
+  persist_artifacts: true
+  status_interval_s: 2.0
+  log_dir: ${OUTPUT_ROOT}/learning_after_execution/rollout_logs
+  distributed_timeout_s: 1200
+  distributed_rollout:
+    enabled: true
+    control_dir: ${OUTPUT_ROOT}/learning_after_execution/control
+    claim_batch_size: 6
+    poll_interval_s: 0.5
+    heartbeat_interval_s: 10
+    heartbeat_stale_s: 3600
+    cleanup_completed_steps: true
+
+reward:
+  backend: rsim_v2
+  model_path: ${RSIM_MODEL_PATH}
+  detikzify_repo: null
+  device: null
+  require_vision_only: true
+  score_batch_size: 16
+  score_mem_cache_size: 4096
+  emd_workers: 2
+  feature_cache_dir: ${OUTPUT_ROOT}/learning_after_execution/gt_rsim_feats
+  environment:
+    render_workers: 8
+    max_pending: 96
+    score_batch_size: 16
+    score_max_wait_ms: 120
+    score_queue_size: 128
+  renderer:
+    texlive_bin: ${TEXLIVE_BIN}
+    pdftoppm_bin: null
+    compilers: [pdflatex, lualatex, xelatex]
+    compile_timeout_s: 30
+    image_size: 448
+    dpi: 150
+    cache_failures: true
+    cache_transient_failures: false
+    keep_failed_logs: true
+    cache_dir: ${OUTPUT_ROOT}/learning_after_execution/render_cache
+    tmp_dir: ${OUTPUT_ROOT}/learning_after_execution/render_tmp
+
+loss:
+  type: dr_grpo
+  scale_rewards: false
+  beta: 0.0
+  epsilon: 0.20
+  epsilon_high: 0.28
+  mask_truncated_completions: true
+  microbatch_size: 2
+  stage0_weight: 0.5
+  stage1_weight: 0.5
+
+optimization:
+  output_dir: ${OUTPUT_ROOT}/learning_after_execution/checkpoints
+  log_dir: ${OUTPUT_ROOT}/learning_after_execution/logs
+  learning_rate: 5.0e-6
+  weight_decay: 1.0e-2
+  warmup_ratio: 0.0
+  lr_scheduler_type: constant
+  max_grad_norm: 1.0
+  num_train_epochs: 1.0
+  max_steps: null
+  prompts_per_device: 2
+  resume_from_checkpoint: null
+  checkpointing:
+    rolling_every_steps: 1
+    rolling_keep: 2
+    milestone_every_steps: 25

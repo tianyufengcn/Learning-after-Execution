@@ -18,7 +18,7 @@ $$
 G_0 = S_1, \qquad G_1 = S_1 - S_0
 $$
 
-The initial action is credited by the final trajectory outcome, while the corrective action is credited by improvement over the executed state it inherits. In the paper setting, both returns are scaled by \(\lambda=10\) and mean-centered independently within each target-image group.
+The initial action is credited by the final trajectory outcome, while the corrective action is credited by improvement over the executed state it inherits. In the paper setting, both returns are scaled by $\lambda=10$ and mean-centered independently within each target-image group.
 
 ## Main Results
 
@@ -171,15 +171,15 @@ bash train.sh
 The paper-active configuration uses:
 
 - `K = 8` independent complete two-stage trajectories per target image;
-- Stage 0 credit from the final score, `G0 = S1`;
-- Stage 1 credit from improvement, `G1 = S1 - S0`;
+- Stage 0 credit from the final score, $G_0 = S_1$;
+- Stage 1 credit from improvement, $G_1 = S_1 - S_0$;
 - credit scale `10` and separate group-mean centering;
 - stage weights `0.5 / 0.5`;
 - `beta = 0` and GRPO clip range `0.20 / 0.28`;
 - temperature `1.0`, top-p `0.9`, and maximum `8192` completion tokens per action;
 - execution-conditioned routing: successful Stage 0 renders are revised, failed executions are repaired.
 
-All Stage 0 and Stage 1 trajectories for an iteration are collected before optimization begins. The training source is kept from the submitted implementation; this public release only simplifies the repository structure around it.
+All Stage 0 and Stage 1 trajectories for an iteration are collected before optimization begins. The training source retains the original implementation; this public release only simplifies the repository structure around it.
 
 ## Metrics
 
@@ -192,7 +192,7 @@ The public repository keeps the metric definitions used in the paper, but omits 
 - **DreamSim**: `1 - distance` with the paper preprocessing convention;
 - **RSim**: DeTikZify `ImageSim` with EMD mode.
 
-The RSim implementation used as the RL reward is in `src/rewards/rsim.py`. Render success is determined by the TikZ execution path in `src/renderer.py`; failed executions receive score zero under the fixed-zero convention used by the main tables.
+The RSim implementation used as the RL reward is in `src/rewards/rsim.py`. The vision-only RSim reward paths used by Learning after Execution and Direct-GRPO load the released SigLIP vision checkpoint directly and do not require the full DeTikZify Python package. The evaluation-only RSim backend in `src/metrics.py` follows DeTikZify `ImageSim` and therefore requires the upstream DeTikZify Python package. Render success is determined by the TikZ execution path in `src/renderer.py`; failed executions receive score zero under the fixed-zero convention used by the main tables.
 
 A minimal metric call is:
 
@@ -222,17 +222,17 @@ The main algorithm is intentionally easy to locate:
 - `src/trainer.py`: optimization loop;
 - `src/renderer.py` and `src/rewards/rsim.py`: execution and reward.
 
-Function names, classes, and the training logic are retained from the submitted code. Only repository paths and launch wrappers are adapted to the simplified public layout.
+Function names, classes, and the training logic are retained from the original implementation. Only repository paths and launch wrappers are adapted to the simplified public layout.
 
 ## Citation
 
-The arXiv identifier will be added after the paper is publicly released. The citation block below is intentionally left as a placeholder so that only the arXiv ID needs to be updated later.
+An arXiv link and identifier will be added after the paper is publicly available.
 
 ```bibtex
-@article{tian2027learning,
+@article{learning_after_execution,
   title   = {Learning after Execution with Action-Specific Credit},
-  author  = {Tian, Yufeng and others},
+  author  = {<AUTHOR_LIST>},
   journal = {arXiv preprint arXiv:<ARXIV_ID>},
-  year    = {2026}
+  year    = {2027}
 }
 ```
