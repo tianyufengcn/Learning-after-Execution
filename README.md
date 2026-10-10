@@ -226,7 +226,7 @@ Function names, classes, and the training logic are retained from the original i
 
 ## Citation
 
-An arXiv link and identifier will be added after the paper is publicly available.
+If you find this work useful, please consider citing:
 
 ```bibtex
 @article{learning_after_execution,
